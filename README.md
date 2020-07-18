@@ -4,6 +4,13 @@ Bash interpreter in Python
 
 Continuation of <https://github.com/idank/bashlex>. The bashlex files may have been modified.
 
+## External libraries
+
+Embedded in bysh.lib:
+- [bashlex](https://github.com/idank/bashlex)
+- [colorama](https://github.com/tartley/colorama)
+
+
 ## Notes
 
 ### tkt

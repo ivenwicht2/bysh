@@ -10,10 +10,6 @@ from bysh.core.store import Store
 class Shell:
 
     def __init__(self, bysh: Bysh, store: Store):
-        colorama.init()
-        self.stdin = sys.stdin
-        self.stdout = sys.stdout
-        self.stderr = sys.stderr
 
         self.store = store
         self.bysh = bysh
@@ -29,10 +25,13 @@ class Shell:
             if __debug__:
                 [print(a.dump()) for a in self.current_ast]
 
+            self.bysh.load_ast(self.current_ast)
+            self.bysh.eval()
+
     def get_input(self):
-        self.stdout.write(self.store.ps1)
-        self.stdout.flush()
-        self.current_input = self.stdin.readline()
+        self.store.stdout.write(self.store.ps1)
+        self.store.stdout.flush()
+        self.current_input = self.store.stdin.readline()
 
     def parse_ast(self, src: str):
         self.current_ast = bashlex.parse(src)
