@@ -13,7 +13,7 @@ class Store:
     def __init__(self):
 
         colorama.init()
-        self.commands = {}
+        self._commands = {}
 
         # Store to handle all variables, their getters and setters
         self._path = pathlib.Path().absolute()
@@ -39,13 +39,12 @@ class Store:
         self.ps4 = ''
         self.last_return_code = 0  # $?
 
-        self.load_commands()
 
-    def load_commands(self, folder=None):
+    def _load_commands(self, folder=None):
         # load commands in bysh.builtins, and bysh.commands
         if folder is None:
-            self.load_commands('builtins')
-            self.load_commands('commands')
+            self._load_commands('builtins')
+            self._load_commands('commands')
         else:
             importlib.invalidate_caches()
             # TODO: folder structure is hardcoded here
@@ -56,11 +55,21 @@ class Store:
                 cmd = getattr(mod, mod.__command__, None)
                 if cmd is None:
                     continue  # ignore .py if __command__ is not defined
-                self.commands[mod.__command__] = cmd
+                self._commands[mod.__command__] = cmd
 
                 if getattr(cmd, 'alias', None):
                     for a in getattr(cmd, 'alias'):
-                        self.commands[a] = cmd
+                        self._commands[a] = cmd
+
+    @property
+    def commands(self):
+        if not self._commands:
+            self._load_commands()
+        return self._commands
+
+    @commands.setter
+    def commands(self, _):
+        self._commands = {}
 
     @property
     def ps1(self):
