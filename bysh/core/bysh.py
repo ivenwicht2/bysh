@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, List
 
 from bysh.core.store import Store
 from bysh._abstract_command import Command
@@ -18,6 +18,9 @@ class Bysh:
     def get_command_from_name(self, cmd: str) -> Union[Command.__class__, None]:
         return self.store.commands.get(cmd, None)
 
+    def node_parts_to_list(self, node) -> List[str]:
+        return [s.word for s in node.parts if s.kind == 'word']
+
     def exec_simple_command(self, node):  # CommandNode
         cls_cmd = self.get_command_from_name(node.parts[0].word)
         if cls_cmd is None:
@@ -30,8 +33,7 @@ class Bysh:
                           self.store.stderr,
                           _store=self.store)
 
-        command.stdin.write('yop')  # write words, except redirections
-        self.store.last_return_code = command.run() or 0
+        self.store.last_return_code = command.run(self.node_parts_to_list(node)) or 0
 
     def eval(self):
         # simple commands

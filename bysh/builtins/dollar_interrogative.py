@@ -13,7 +13,7 @@ class dollar_interrogative(Command):
         if self.store is None:
             raise RuntimeError('_store: Store was not given in builtin <dollar_interrogative> parameters')
 
-    def run(self, *args, **kwargs) -> int:
+    def run(self, arguments, *args, **kwargs) -> int:
         self.stdout.write(str(self.store.last_return_code) + '\n')
         self.stdout.flush()
         return 0

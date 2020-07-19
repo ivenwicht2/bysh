@@ -57,6 +57,7 @@ class Store:
                 if getattr(cmd, 'alias', None):
                     for a in getattr(cmd, 'alias'):
                         self.commands[a] = cmd
+
     @property
     def ps1(self):
         return self._ps1.format_map({'path': self.path,
@@ -74,3 +75,7 @@ class Store:
     @path.setter
     def path(self, _):
         self._path = pathlib.Path().absolute()
+
+    @property
+    def home(self) -> pathlib.Path:
+        return pathlib.Path.home()

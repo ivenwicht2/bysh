@@ -12,6 +12,12 @@ class ls(Command):
         if self.store is None:
             raise RuntimeError('_store: Store was not given in <ls> parameters')
 
-    def run(self, *args, **kwargs):
-        self.stdout.write('\n'.join(os.listdir()) + '\n')
+    def run(self, arguments, *args, **kwargs):
+        try:
+            dt = '\n'.join(os.listdir()) + '\n'
+        except PermissionError:
+            self.stderr.write('Permission denied\n')
+            return 1
+        self.stdout.write(dt)
         self.stdout.flush()
+        return 0

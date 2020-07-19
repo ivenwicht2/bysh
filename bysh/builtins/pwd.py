@@ -11,7 +11,7 @@ class pwd(Command):
         if self.store is None:
             raise RuntimeError('_store: Store was not given in builtin <pwd> parameters')
 
-    def run(self, *args, **kwargs) -> int:
+    def run(self, arguments, *args, **kwargs) -> int:
         self.stdout.write(str(self.store.path) + '\n')
         self.stdout.flush()
         return 0
