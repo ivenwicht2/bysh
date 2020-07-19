@@ -13,6 +13,11 @@ Embedded in bysh.lib:
 
 ## Notes
 
+### alpha
+
+For now the builtins and commands does not try to mimic the exact posix/bash behavior.
+The goal is to have a working core, and then correct details.
+
 ### tkt
 
 || & && ; ;; ( ) | \n

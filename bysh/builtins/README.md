@@ -1,5 +1,6 @@
 # Bysh builtins commands
 
+
 Original list:
 
 alias
@@ -55,3 +56,7 @@ umask
 unalias
 unset
 wait
+
+## Note
+
+Added 'nop' builtin, used for development.

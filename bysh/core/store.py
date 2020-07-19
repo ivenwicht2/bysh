@@ -24,6 +24,8 @@ class Store:
         self.stdout = sys.stdout
         self.stderr = sys.stderr
 
+        self.exit = False  # main loop
+
         self._ps1 = (
                 colorama.Fore.GREEN
                 + '{user}@{host}'
@@ -51,7 +53,9 @@ class Store:
                     if (f.endswith('.py') and not f.startswith('_'))]
             for f in cmds:
                 mod = importlib.import_module('.' + f[:-3], 'bysh.{}'.format(folder))
-                cmd = getattr(mod, mod.__command__)
+                cmd = getattr(mod, mod.__command__, None)
+                if cmd is None:
+                    continue  # ignore .py if __command__ is not defined
                 self.commands[mod.__command__] = cmd
 
                 if getattr(cmd, 'alias', None):

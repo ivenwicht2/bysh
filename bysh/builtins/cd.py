@@ -14,14 +14,17 @@ class cd(Command):
         if self.store is None:
             raise RuntimeError('_store: Store was not given in builtin <cd> parameters')
 
+        self.argparser.prog = __command__
+        self.argparser.add_argument('directory', help='directory to navigate', nargs='?',
+                                    default=self.store.home)
+
     def run(self, arguments, *args, **kwargs) -> int:
-        togo = self.store.home
-        if len(arguments) > 1:
-            # cmdname + args
-            togo = pathlib.Path(arguments[1])
+
+        if self.parse_input(arguments[1:]):
+            return 1
         try:
-            os.chdir(togo)
-            self.store.path = togo  # store doesnt consider this, and sets to current path.
+            os.chdir(pathlib.Path(self.arguments.directory))
+            self.store.path = self.arguments.directory  # store doesnt consider this, and sets to current path.
             return 0
         except FileNotFoundError:
             self.stderr.write('No such file or directory\n')
@@ -33,6 +36,6 @@ class cd(Command):
             self.stderr.write('Not a directory\n')
             return 1
         except OSError:
-            self.stderr.write('Unable to cd to {}\n'.format(togo))
+            self.stderr.write('Unable to cd to {}\n'.format(self.arguments.directory))
             return 1
         return 1

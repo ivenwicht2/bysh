@@ -18,7 +18,8 @@ class Bysh:
     def get_command_from_name(self, cmd: str) -> Union[Command.__class__, None]:
         return self.store.commands.get(cmd, None)
 
-    def node_parts_to_list(self, node) -> List[str]:
+    @staticmethod
+    def node_parts_to_list(node) -> List[str]:
         return [s.word for s in node.parts if s.kind == 'word']
 
     def exec_simple_command(self, node):  # CommandNode
@@ -31,9 +32,16 @@ class Bysh:
         command = cls_cmd(stdio.get_new_std(),
                           self.store.stdout,
                           self.store.stderr,
-                          _store=self.store)
-
-        self.store.last_return_code = command.run(self.node_parts_to_list(node)) or 0
+                          _store=self.store,
+                          _shell=self,
+                          _node=node)
+        try:
+            self.store.last_return_code = command.run(self.node_parts_to_list(node)) or 0
+        except NotImplementedError as e:
+            self.store.stderr.write('The functionnality you asked is not implemented : {}\n'.format(e))
+            self.store.last_return_code = 1
+        except Exception as e:
+            self.store.stderr.write('BYSH: Unhandled exception : {}\n'.format(e))
 
     def eval(self):
         # simple commands

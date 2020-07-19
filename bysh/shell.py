@@ -18,12 +18,11 @@ class Shell:
         self.current_ast = None
 
     def repl_loop(self):
-        while True:
+        while not self.store.exit:
             self.get_input()
             self.parse_ast(self.current_input)
 
-            if __debug__:
-                [print(a.dump()) for a in self.current_ast]
+            # [print(a.dump()) for a in self.current_ast]
 
             self.bysh.load_ast(self.current_ast)
             self.bysh.eval()
