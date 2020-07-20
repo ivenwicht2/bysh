@@ -39,22 +39,33 @@ class Store:
         self.ps4 = ''
         self.last_return_code = 0  # $?
 
-
     def _load_commands(self, folder=None):
         # load commands in bysh.builtins, and bysh.commands
         if folder is None:
-            self._load_commands('builtins')
-            self._load_commands('commands')
+            base = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'commands')
+            for d in os.listdir(base):
+                if os.path.isdir(os.path.join(base, d)):
+                    self._load_commands(d)
+
         else:
             importlib.invalidate_caches()
             # TODO: folder structure is hardcoded here
-            cmds = [f for f in os.listdir(os.path.join(os.path.dirname(os.path.dirname(__file__)), folder))
-                    if (f.endswith('.py') and not f.startswith('_'))]
+            cmds = [
+                f for f in os.listdir(
+                    os.path.join(
+                        os.path.join(
+                            os.path.dirname(
+                                os.path.dirname(__file__)
+                            ), 'commands'), folder)
+                )
+                if (f.endswith('.py') and not f.startswith('_'))
+            ]
             for f in cmds:
-                mod = importlib.import_module('.' + f[:-3], 'bysh.{}'.format(folder))
+                mod = importlib.import_module('.' + f[:-3], 'bysh.commands.{}'.format(folder))
                 cmd = getattr(mod, mod.__command__, None)
                 if cmd is None:
                     continue  # ignore .py if __command__ is not defined
+                cmd.origin = folder
                 self._commands[mod.__command__] = cmd
 
                 if getattr(cmd, 'alias', None):

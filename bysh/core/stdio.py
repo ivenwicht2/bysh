@@ -14,7 +14,5 @@ def get_stds() -> (typing.TextIO, typing.TextIO, typing.TextIO):
     )
 
 
-def close_stds(sti, sto, ste) -> None:
-    sti.close()
-    sto.close()
-    ste.close()
+def close_stds(*stds) -> None:
+    [std.close() for std in stds]

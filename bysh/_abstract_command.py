@@ -18,6 +18,7 @@ class Command:
         self.stdin: typing.TextIO = stdin
         self.stdout: typing.TextIO = stdout
         self.stderr: typing.TextIO = stderr
+        self.origin = ''
 
         self.argparser = argparse.ArgumentParser(prog='CMD', add_help=False)
         self.argparser.add_argument('-h', '--help', help='show this help message and exit', action='store_true')
