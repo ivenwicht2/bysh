@@ -4,6 +4,14 @@ Bash interpreter in Python
 
 Continuation of <https://github.com/idank/bashlex>. The bashlex files may have been modified.
 
+## Installation
+
+```shell
+$py -3 -m venv venv && venv/scripts/activate.bat
+$pip install git+https://github.com/haytek/bysh
+$python -m bysh
+```
+
 ## External libraries
 
 Embedded in bysh.lib:
