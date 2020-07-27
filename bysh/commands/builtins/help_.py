@@ -1,9 +1,10 @@
 from bysh._abstract_command import Command
 
-__command__ = 'help'
+__command__ = 'help_'
 
 
-class help(Command):
+class help_(Command):
+    alias = ('help',)
 
     def __init__(self, stdin, stdout, stderr, *args, **kwargs):
         super().__init__(stdin, stdout, stderr)

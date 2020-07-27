@@ -42,3 +42,7 @@ The goal is to have a working core, and then correct details.
 Plus tard il faudra  
 msvcrt.getche() in (b'\x00', b'\xe0'):  
 <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/getch-getwch?view=vs-2019>
+
+## TODO
+
+Separate builtins from commands like $?
