@@ -1,7 +1,7 @@
 import setuptools
 import bysh
 
-with open('README.md','r') as f:
+with open('README.md', 'r') as f:
     long_description = f.read()
 
 with open('requirements.txt', 'r') as f:
