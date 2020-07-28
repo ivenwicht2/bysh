@@ -21,6 +21,7 @@ class cd(Command):
                                     default=self.store.home)
 
     def run(self, arguments: List[str], *args, **kwargs) -> int:
+        # Currently, cannot cd to a non ascii name, or name with spaces. (with quotes)
 
         if self.parse_input(arguments[1:]):  # noqa the first is a str
             return 1

@@ -1,8 +1,8 @@
 # main entry point
 
-from bysh.shell import Shell
-from bysh.core.store import Store
-from bysh.core.bysh import Bysh
+from bysh.core import Shell
+from bysh.core import Store
+from bysh.core import Bysh
 
 if __name__ == '__main__':
     # Main entry point.
@@ -15,6 +15,8 @@ if __name__ == '__main__':
 
     # TODO: The store should be created by the engine.
     # TODO: Some of the store's variables should be in Shell
+
+    # TODO: We could to from bysh import Shell, and just launch it
 
     s = Store()
 

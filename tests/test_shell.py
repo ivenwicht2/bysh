@@ -1,5 +1,5 @@
 import unittest
-from bysh.shell import Shell
+from bysh.core.shell import Shell
 
 
 class TestShell(unittest.TestCase):
