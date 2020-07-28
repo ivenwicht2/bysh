@@ -20,12 +20,13 @@ class Shell:
     def repl_loop(self):
         while not self.store.exit:
             self.get_input()
-            self.parse_ast(self.current_input)
+            if not self.current_input.isspace():
+                self.parse_ast(self.current_input)
 
-            # [print(a.dump()) for a in self.current_ast]
+                # [print(a.dump()) for a in self.current_ast]
 
-            self.bysh.load_ast(self.current_ast)
-            self.bysh.eval()
+                self.bysh.load_ast(self.current_ast)
+                self.bysh.eval()
 
     def get_input(self):
         self.store.stdout.write(self.store.ps1)
