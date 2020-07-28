@@ -115,4 +115,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-bysh/lib/bashlex/parsetab.py
+/bysh/lib/bashlex/parsetab.py
