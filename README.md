@@ -1,5 +1,7 @@
 # Bysh
 
+![tests](https://github.com/Haytek/bysh/workflows/tests/badge.svg)
+
 Bash interpreter in Python
 
 Continuation of <https://github.com/idank/bashlex>. The bashlex files may have been modified.
