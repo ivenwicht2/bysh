@@ -7,7 +7,6 @@ with open('README.md', 'r') as f:
 with open('requirements.txt', 'r') as f:
     requirements = list(f.readlines())
 
-
 setuptools.setup(
     name='bysh',
     version=bysh.__version__,
@@ -25,4 +24,10 @@ setuptools.setup(
         'Programming Language :: Python :: 3.8'
     ],
     python_requires='>=3.7',
+    entry_points={
+        'console_scripts': [
+            'bysh = bysh.__main__:console_run'
+        ]
+    }
+
 )

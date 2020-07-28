@@ -10,9 +10,9 @@ Continuation of <https://github.com/idank/bashlex>. The bashlex files may have b
 ## Installation
 
 ```shell
-$py -3 -m venv venv && venv/scripts/activate.bat
-$pip install git+https://github.com/haytek/bysh
-$python -m bysh
+py -3 -m venv venv && venv/scripts/activate.bat
+pip install bysh
+bysh
 ```
 
 ## External libraries

@@ -4,13 +4,14 @@ from bysh.core import Shell
 from bysh.core import Store
 from bysh.core import Bysh
 
-if __name__ == '__main__':
+
+def console_run():
     # Main entry point.
     # Creates a three elements:
     #    - Store : the place where all internal and public data is stored
     #    - Bysh  : the engine, which executes commands. Relies on store for some variables
     #    - Shell : A shell, creating a loop and passing commands to the engine.
-    
+
     # We then execute the Read Execute Print Loop of the Shell.
 
     # TODO: The store should be created by the engine.
@@ -25,3 +26,7 @@ if __name__ == '__main__':
         s
     )
     sh.repl_loop()
+
+
+if __name__ == '__main__':
+    console_run()
