@@ -20,6 +20,8 @@ class Shell:
     def repl_loop(self):
         while not self.store.exit:
             self.get_input()
+            if not self.current or self.current_input.isspace():
+                continue
 
             self.parse_ast(self.current_input)
 
