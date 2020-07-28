@@ -47,6 +47,8 @@ class Command:
     def parse_input(self, argus):
         # convenience function, parsing given arguments into self.arguments.
         # Can be called in beginning of run(), to parse arguments.
+        # The functions have to add argparse arguments to the self.argparser object.
+        # Commands can choose not to use this, and just dont call it.
         
         # the return does not mean error, but asks to exit program.
         # used as a way to bubble exit to subclass
