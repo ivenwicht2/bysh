@@ -9,6 +9,8 @@ Continuation of <https://github.com/idank/bashlex>. The bashlex files may have b
 
 ## Installation
 
+A python version >= 3.6 is needed.
+
 ```shell
 py -3 -m venv venv && venv/scripts/activate.bat
 pip install bysh
