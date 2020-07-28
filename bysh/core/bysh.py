@@ -17,7 +17,12 @@ class Bysh:
         self.current_ast = None
         self.store = store
 
-    def load_ast(self, ast):
+    def load_ast(self, ast) -> None:
+        """
+        Loads the AST given, so it will be executed on next eval() call
+        :param ast: The AST to load
+        :return:
+        """
         self.current_ast = ast
 
     def get_command_from_name(self, cmd: str) -> Union[Command.__class__, None]:
@@ -28,7 +33,12 @@ class Bysh:
         # returns the words contained in the nodes
         return [s.word for s in node.parts if s.kind == 'word']
 
-    def exec_simple_command(self, node):  # CommandNode
+    def exec_simple_command(self, node) -> None:  # CommandNode
+        """
+        Executes a single Command Node.
+        :param node: the command node to execute
+        :return:
+        """
         cls_cmd = self.get_command_from_name(node.parts[0].word)
         if cls_cmd is None:
             self.store.stderr.write('Command not found: {}\n'.format(node.parts[0].word))
@@ -50,7 +60,11 @@ class Bysh:
         except Exception as e:
             self.store.stderr.write('BYSH: Unhandled exception : {}\n'.format(e))
 
-    def eval(self):
+    def eval(self) -> None:
+        """
+        Executes the AST previously loaded by load_ast()
+        :return: None
+        """
         # simple commands
         for nod in self.current_ast:
             if nod.kind == 'command':  # TODO: Allow execution of pipelines and lists

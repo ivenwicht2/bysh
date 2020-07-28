@@ -1,3 +1,5 @@
+from typing import List
+
 from bysh.commands._abstract_command import Command
 
 import os
@@ -18,9 +20,9 @@ class cd(Command):
         self.argparser.add_argument('directory', help='directory to navigate', nargs='?',
                                     default=self.store.home)
 
-    def run(self, arguments, *args, **kwargs) -> int:
+    def run(self, arguments: List[str], *args, **kwargs) -> int:
 
-        if self.parse_input(arguments[1:]):
+        if self.parse_input(arguments[1:]):  # noqa the first is a str
             return 1
         try:
             os.chdir(pathlib.Path(self.arguments.directory))

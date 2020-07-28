@@ -13,6 +13,9 @@ if __name__ == '__main__':
     
     # We then execute the Read Execute Print Loop of the Shell.
 
+    # TODO: The store should be created by the engine.
+    # TODO: Some of the store's variables should be in Shell
+
     s = Store()
 
     sh = Shell(

@@ -1,6 +1,7 @@
 import io
 import typing
 
+
 # for now unused stdio conveniences function
 
 def get_new_std() -> typing.TextIO:
