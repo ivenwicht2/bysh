@@ -1,5 +1,4 @@
-from bysh._abstract_command import Command
-import os
+from bysh.commands._abstract_command import Command
 
 __command__ = 'nop'
 

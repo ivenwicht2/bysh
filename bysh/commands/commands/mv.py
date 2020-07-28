@@ -1,6 +1,6 @@
 import shutil
 
-from bysh._abstract_command import Command
+from bysh.commands._abstract_command import Command
 
 
 __command__ = 'mv'
