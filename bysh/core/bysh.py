@@ -1,7 +1,7 @@
 from typing import Union, List
 
 from bysh.core.store import Store
-from bysh._abstract_command import Command
+from bysh.commands._abstract_command import Command
 from bysh.core import stdio
 
 

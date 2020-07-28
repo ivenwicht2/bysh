@@ -1,4 +1,4 @@
-from bysh._abstract_command import Command
+from bysh.commands._abstract_command import Command
 import os
 
 __command__ = 'ls'
