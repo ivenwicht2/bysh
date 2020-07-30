@@ -46,4 +46,9 @@ class Shell:
         :param src:
         :return:
         """
-        self.current_ast = bashlex.parse(src)
+        try:
+            self.current_ast = bashlex.parse(src)
+        except bashlex.errors.ParsingError:
+            self.current_ast = None
+            self.store.stderr.write('Failed to parse command\n')
+            self.store.stderr.flush()

@@ -24,7 +24,7 @@ class Engine:
         :param ast: The AST to load
         :return:
         """
-        self.current_ast = ast
+        self.current_ast = ast or None
 
     def get_command_from_name(self, cmd: str) -> Union[Command.__class__, None]:
         return self.store.commands.get(cmd, None)
@@ -67,6 +67,10 @@ class Engine:
         :return: None
         """
         # simple commands
+
+        if self.current_ast is None:
+            return
+
         for nod in self.current_ast:
             if nod.kind == 'command':  # TODO: Allow execution of pipelines and lists
                 try:
