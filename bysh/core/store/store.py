@@ -176,3 +176,19 @@ class Store:
         :return: pathlib.Path object
         """
         return pathlib.Path.home()
+
+    @property
+    def term_size(self) -> (int, int):
+        """
+        Get the terminal size, with (col, lines).
+
+        :return:
+        """
+        try:
+            # We dont use the shutil version of get_terminal_size
+            # Because env variables impact it, and they are not updated
+            # on resize.
+            col, lines = os.get_terminal_size()
+        except OSError:  # when the general stdout is piped
+            return 0, 0
+        return col, lines
