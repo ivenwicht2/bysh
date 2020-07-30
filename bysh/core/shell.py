@@ -63,7 +63,7 @@ class Shell:
             self.tmp_input = getch() 
             
             if self.tmp_input == b'\r':
-                break
+                continue
 
             if self.tmp_input == b"\x00" :
                 self.tmp_iput = getch()
