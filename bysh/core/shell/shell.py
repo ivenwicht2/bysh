@@ -1,18 +1,17 @@
-from bysh.core import Bysh
 from bysh.lib import bashlex
 
-from bysh.core.store import Store
+from bysh.core import Engine
 
 
 class Shell:
 
-    def __init__(self, bysh: Bysh, store: Store):
+    def __init__(self):
 
-        self.store = store
-        self.bysh = bysh
+        self.engine = Engine()
+        self.store = self.engine.store
 
         self.current_input: str = ''  # last command
-        self.current_ast = None       # AST of this command
+        self.current_ast = None  # AST of this command
 
     def repl_loop(self) -> None:
         """
@@ -29,8 +28,8 @@ class Shell:
             self.parse_ast(self.current_input)
 
             # [print(a.dump()) for a in self.current_ast]
-            self.bysh.load_ast(self.current_ast)
-            self.bysh.eval()
+            self.engine.load_ast(self.current_ast)
+            self.engine.eval()
 
     def get_input(self) -> None:
         """

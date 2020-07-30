@@ -1,11 +1,12 @@
 from typing import Union, List
 
-from bysh.core.store import Store
-from bysh.commands._abstract_command import Command
-from bysh.core import stdio
+from bysh.commands.abstract_command import Command
+
+from bysh.core.store.store import Store
+from . import stdio
 
 
-class Bysh:
+class Engine:
     """
     The main eval loop, executing commands.
     The commands to be executed needs to be loaded with self.load_ast(ast).
@@ -13,9 +14,9 @@ class Bysh:
     """
 
     # The main ceval
-    def __init__(self, store: Store):
+    def __init__(self):
         self.current_ast = None
-        self.store = store
+        self.store = Store()
 
     def load_ast(self, ast) -> None:
         """
@@ -49,7 +50,7 @@ class Bysh:
                           self.store.stdout,
                           self.store.stderr,
                           _store=self.store,  # TODO: for now all theses are given in **kwargs
-                          _shell=self,        # maybe find a cleaner and more standard way to do
+                          _shell=self,  # maybe find a cleaner and more standard way to do
                           _node=node)
         try:
             # execute command from ast, with the words in the following nodes.
@@ -74,4 +75,4 @@ class Bysh:
                     self.store.stdout.write('ERROR while executing {} {}'.format(nod, e))
                     raise
 
-        self.current_ast = None         # reset the current ast after execution
+        self.current_ast = None  # reset the current ast after execution

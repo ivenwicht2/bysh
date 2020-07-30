@@ -1,4 +1,4 @@
-# Bysh
+# Engine
 
 ![tests](https://github.com/Haytek/bysh/workflows/tests/badge.svg)
 ![Upload Python Package](https://github.com/Haytek/bysh/workflows/Upload%20Python%20Package/badge.svg)
