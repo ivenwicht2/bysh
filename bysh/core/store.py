@@ -48,6 +48,8 @@ class Store:
         self.ps4 = ''
         self.last_return_code = 0  # $?         # Return code of last command
 
+        self.del_alias = ["exit_","help_","hash_","dollar_interrogative"]
+
     def _load_commands(self, folder=None) -> None:
         """
         This commands loads all files contained in subdirectories in bysh/commands,
@@ -89,7 +91,9 @@ class Store:
                 if cmd is None:
                     continue  # ignore .py if __command__ is not defined
                 cmd.origin = folder  # write the folder name, so the origin of command is kept
-                self._commands[mod.__command__] = cmd  # add the command class to the self._commands dict
+                
+                if f[:-3] not in self.del_alias :
+                    self._commands[mod.__command__] = cmd  # add the command class to the self._commands dict
 
                 # also add aliases to self._commands
                 if getattr(cmd, 'alias', None):
