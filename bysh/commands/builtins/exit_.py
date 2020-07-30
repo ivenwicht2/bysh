@@ -5,6 +5,7 @@ __command__ = 'exit_'
 
 class exit_(Command):
     alias = ('exit',)
+    do_not_register_command_name = True
 
     def __init__(self, stdin, stdout, stderr, *args, **kwargs):
         super().__init__(stdin, stdout, stderr)
