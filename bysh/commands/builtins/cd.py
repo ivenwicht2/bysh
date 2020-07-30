@@ -1,6 +1,6 @@
 from typing import List
 
-from bysh.commands._abstract_command import Command
+from bysh.commands.abstract_command import Command
 
 import os
 import pathlib
