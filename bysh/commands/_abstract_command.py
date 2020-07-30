@@ -24,6 +24,7 @@ class ParsingError(Exception):
 
 class Command:
     alias = ()  # tuple of strings, for aliases
+    do_not_register_command_name = None
 
     # base class for all commands and builtins
 

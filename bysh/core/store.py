@@ -89,7 +89,9 @@ class Store:
                 if cmd is None:
                     continue  # ignore .py if __command__ is not defined
                 cmd.origin = folder  # write the folder name, so the origin of command is kept
-                self._commands[mod.__command__] = cmd  # add the command class to the self._commands dict
+                
+                if not getattr(cmd, 'do_not_register_command_name', None):
+                    self._commands[mod.__command__] = cmd  # add the command class to the self._commands dict
 
                 # also add aliases to self._commands
                 if getattr(cmd, 'alias', None):
