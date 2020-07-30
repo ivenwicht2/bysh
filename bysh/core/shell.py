@@ -1,8 +1,5 @@
-import sys
-
 from bysh.core import Bysh
 from bysh.lib import bashlex
-from bysh.lib import colorama
 
 from bysh.core.store import Store
 

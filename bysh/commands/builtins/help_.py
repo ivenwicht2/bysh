@@ -5,6 +5,7 @@ __command__ = 'help_'
 
 class help_(Command):
     alias = ('help',)
+    do_not_register_command_name = True
 
     def __init__(self, stdin, stdout, stderr, *args, **kwargs):
         super().__init__(stdin, stdout, stderr)
