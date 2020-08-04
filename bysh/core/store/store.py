@@ -50,19 +50,19 @@ class Store:
 
     def _load_commands(self, folder=None) -> None:
         """
-        This commands loads all files contained in subdirectories in bysh/commands,
+        This commands loads all files contained in subdirectories in engine/commands,
         if the file is a .py and does not start with '_'.
         Only the first folder level is considered.
-        :param folder: The subfolder's name inside bysh/commands to load files from
+        :param folder: The subfolder's name inside engine/commands to load files from
         :return: None
         """
 
         # The store holds the responsability of loading commands.
-        # All subfolders under bysh/commands are supposed to be directories, with each file a command.
+        # All subfolders under engine/commands are supposed to be directories, with each file a command.
 
         # The first call scans the dir, and calls again this func with the folder s name
         if folder is None:
-            base = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'commands')
+            base = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'commands')
             for d in os.listdir(base):
                 if os.path.isdir(os.path.join(base, d)):
                     self._load_commands(d)
@@ -77,7 +77,9 @@ class Store:
                     os.path.join(
                         os.path.join(
                             os.path.dirname(
-                                os.path.dirname(__file__)
+                                os.path.dirname(
+                                    os.path.dirname(__file__)
+                                )
                             ), 'commands'), folder)
                 )
                 if (f.endswith('.py') and not f.startswith('_'))
@@ -85,11 +87,13 @@ class Store:
 
             for f in cmds:
                 mod = importlib.import_module('.' + f[:-3], 'bysh.commands.{}'.format(folder))  # get the module
-                cmd = getattr(mod, mod.__command__, None)  # get the command name
+                cmd = getattr(mod, mod.__command__, None)  # noqa # get the command name
                 if cmd is None:
                     continue  # ignore .py if __command__ is not defined
                 cmd.origin = folder  # write the folder name, so the origin of command is kept
-                self._commands[mod.__command__] = cmd  # add the command class to the self._commands dict
+
+                if not getattr(cmd, 'do_not_register_command_name', None):
+                    self._commands[mod.__command__] = cmd  # noqa  # add the command class to the self._commands dict
 
                 # also add aliases to self._commands
                 if getattr(cmd, 'alias', None):
@@ -172,3 +176,19 @@ class Store:
         :return: pathlib.Path object
         """
         return pathlib.Path.home()
+
+    @property
+    def term_size(self) -> (int, int):
+        """
+        Get the terminal size, with (col, lines).
+
+        :return:
+        """
+        try:
+            # We dont use the shutil version of get_terminal_size
+            # Because env variables impact it, and they are not updated
+            # on resize.
+            col, lines = os.get_terminal_size()
+        except OSError:  # when the general stdout is piped
+            return 0, 0
+        return col, lines

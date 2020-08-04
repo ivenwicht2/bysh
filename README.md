@@ -3,6 +3,8 @@
 ![tests](https://github.com/Haytek/bysh/workflows/tests/badge.svg)
 ![Upload Python Package](https://github.com/Haytek/bysh/workflows/Upload%20Python%20Package/badge.svg)
 
+[![PyPI version](https://badge.fury.io/py/bysh.svg)](https://badge.fury.io/py/bysh)
+
 Bash interpreter in Python
 
 Continuation of <https://github.com/idank/bashlex>. The bashlex files may have been modified.

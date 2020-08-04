@@ -1,10 +1,10 @@
 import unittest
-from bysh.core.shell import Shell
+from bysh import Shell
 
 
 class TestShell(unittest.TestCase):
     def test_instance(self):
-        sh = Shell(None, None)
+        sh = Shell()
         self.assertIsNotNone(sh)
 
 

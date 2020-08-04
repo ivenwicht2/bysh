@@ -8,7 +8,7 @@ with open('requirements.txt', 'r') as f:
     requirements = list(f.readlines())
 
 setuptools.setup(
-    name='bysh',
+    name='engine',
     version=bysh.__version__,
     author='haytek',
     author_email='haytek34@gmail.com',
@@ -27,7 +27,7 @@ setuptools.setup(
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
-            'bysh = bysh.__main__:console_run'
+            'engine = engine.__main__:console_run'
         ]
     }
 

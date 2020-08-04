@@ -1,10 +1,11 @@
-from bysh.commands._abstract_command import Command
+from bysh.commands.abstract_command import Command
 
 __command__ = 'dollar_interrogative'
 
 
 class dollar_interrogative(Command):
     alias = ('$?',)
+    do_not_register_command_name = True
 
     def __init__(self, stdin, stdout, stderr, *args, **kwargs):
         super().__init__(stdin, stdout, stderr)
