@@ -5,6 +5,7 @@ from bysh.lib import colorama
 
 from bysh.core import Bysh
 from bysh.core.store import Store
+from bysh.core.history import History
 
 from msvcrt import getch
 
@@ -19,6 +20,8 @@ class Shell:
         self.current_input: str = ''  # last command
         self.current_ast = None       # AST of this command
 
+        self.position_in_input = 0
+
         self.special_caractere = {
             b'\t' : self.autocomplete,
             b'\b' : self.erase_cacatere,
@@ -29,6 +32,7 @@ class Shell:
             b'R' :  self.insert,
             b'S' :  self.delete
         }
+        self.History = History()
 
     def repl_loop(self) -> None:
         """
@@ -66,7 +70,7 @@ class Shell:
                 continue
 
             if self.tmp_input == b"\x00" :
-                self.tmp_iput = getch()
+                self.tmp_input = getch()
                 self.special_caractere[self.tmp_input]()
                 continue
 
@@ -75,11 +79,20 @@ class Shell:
                 continue
             
             self.current_input += str(self.tmp_input.decode('utf-8'))
-            self.fwrite(self.current_input[-len(self.tmp_input)])
 
+            self.fwrite(self.current_input[-len(self.tmp_input)])
+            self.History.command[-1] = self.current_input.strip()
 
         self.current_input = self.current_input.strip()
+
+        if not self.current_input.isspace() and self.current_input != "": 
+            self.History.add_entry()
+        self.History.position = len(self.History.command)-1
+
         self.fwrite('\n')
+
+                    
+
 
     def parse_ast(self, src: str) -> None:
         """
@@ -93,6 +106,12 @@ class Shell:
         self.store.stdout.write(output)
         self.store.stdout.flush()
     
+    def del_command(self):
+        lenght = len(self.current_input)
+        self.fwrite("\b"*lenght)
+        self.fwrite(" "*lenght)
+        self.fwrite("\b"*lenght)
+
     def autocomplete(self):
         pass
 
@@ -103,19 +122,33 @@ class Shell:
         
 
     def left_arrow(self):
-        pass
+        self.fwrite('\b')
 
     def down_arrow(self):
-        pass
+        new_entry = self.History.go_next()
+        if new_entry != None : 
+            self.del_command()
+            self.current_input = new_entry 
+            self.fwrite(self.current_input)
 
     def right_arrow(self):  
         pass
 
     def up_arrow(self):
-        pass
+        new_entry = self.History.go_back()
+        if new_entry != None : 
+            self.del_command()
+            self.current_input = new_entry 
+            self.fwrite(self.current_input)
 
     def insert(self):
         pass
 
     def delete(self):
         pass
+
+    def new_input(self,current_input):
+        tmp = list(self.current_input)
+        tmp.insert(self.position_in_input,current_input)
+        self.current_input = "".join(tmp) 
+        self.position_in_input += len(current_input)
